@@ -1,325 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>ResQMinds 🧠✨</title>
-<style>
-  body {
-    margin: 0;
-    font-family: "Segoe UI", sans-serif;
-    background: #121212;
-    color: #f1f1f1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-  }
-  header {
-    width: 100%;
-    padding: 15px;
-    text-align: center;
-    font-size: 1.8rem;
-    font-weight: bold;
-    background: #1a1a1a;
-    color: #4cc9f0;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.6);
-  }
-  #hud {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-    width: 80%;
-    font-size: 1.2rem;
-  }
-  #game-box {
-    margin-top: 40px;
-    max-width: 700px;
-    background: #1e1e1e;
-    padding: 20px;
-    border-radius: 16px;
-    text-align: center;
-    line-height: 1.6;
-  }
-  #mentor {
-    margin: 20px 0;
-    font-size: 1.2rem;
-    color: #ffd166;
-    min-height: 60px;
-  }
-  .choices {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 20px;
-  }
-  button {
-    border: none;
-    padding: 15px;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #fff;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: transform 0.2s, background 0.3s;
-  }
-  button:hover { transform: scale(1.05); }
-  button:active { transform: scale(0.95); }
-  footer {
-    margin-top: auto;
-    padding: 15px;
-    font-size: 0.9rem;
-    color: #999;
-  }
-</style>
+  <meta charset="UTF-8">
+  <title>🔥 Fire Survival Game</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: #121212;
+      color: #f1f1f1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    header {
+      width: 100%;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      background: #1a1a1a;
+      color: #ff6f3c;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.6);
+    }
+
+    #hud {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      width: 80%;
+      font-size: 1.2rem;
+    }
+
+    #game-box {
+      margin-top: 40px;
+      max-width: 600px;
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(255, 111, 60, 0.5);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    #mentor {
+      margin: 20px 0;
+      font-size: 1.2rem;
+      color: #ffd166;
+      min-height: 60px;
+    }
+
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    button {
+      background: #ff6f3c;
+      border: none;
+      padding: 15px;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #fff;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(255, 111, 60, 0.7);
+      transition: transform 0.2s, background 0.3s;
+    }
+
+    button:hover { transform: scale(1.05); background: #ff845c; }
+    button:active { transform: scale(0.95); }
+
+    footer {
+      margin-top: auto;
+      padding: 15px;
+      font-size: 0.9rem;
+      color: #999;
+    }
+  </style>
 </head>
 <body>
+  <header>🔥 Fire Survival Game</header>
 
-<header>🧠 ResQMinds: Health & Safety Survival Game</header>
-
-<div id="hud">
-  <div>❤ Lives: <span id="lives">3</span></div>
-  <div>⭐ Score: <span id="score">0</span></div>
-  <div>📍 Level: <span id="level">1</span></div>
-</div>
-
-<div id="game-box">
-  <h2 id="scenario-title">Welcome to ResQMinds!</h2>
-  <p id="scenario-text">Press Start to begin your survival training 🚀</p>
-  <div id="mentor"></div>
-  <div class="choices" id="choices">
-    <button style="background:#2a9d8f" onclick="startGame()">▶ Start Game</button>
+  <div id="hud">
+    <div>❤ Lives: <span id="lives">3</span></div>
+    <div>⭐ Score: <span id="score">0</span></div>
+    <div>📍 Level: <span id="level">1</span></div>
   </div>
-</div>
 
-<footer>Powered by AIGuide ✨</footer>
+  <div id="game-box">
+    <h2 id="scenario-title">Level 1: Small Kitchen Fire</h2>
+    <p id="scenario-text">You notice smoke coming from a pan in the kitchen. What do you do?</p>
 
-<script>
-// -------------------- VARIABLES --------------------
-let score = 0, lives = 3, level = 1;
-let currentScenarioIndex = 0, currentLevelIndex = 0;
-let shuffledScenarios = [];
+    <div id="mentor">AIGuide: Choose wisely!</div>
 
-// DOM elements
-const scoreEl = document.getElementById("score");
-const livesEl = document.getElementById("lives");
-const levelEl = document.getElementById("level");
-const scenarioTitle = document.getElementById("scenario-title");
-const scenarioText = document.getElementById("scenario-text");
-const mentorDiv = document.getElementById("mentor");
-const choicesDiv = document.getElementById("choices");
+    <div class="choices" id="choices"></div>
+  </div>
 
-// -------------------- SCENARIOS --------------------
-const allScenarios = [
-  {
-    title: "Dog Bite Emergency",
-    levels: [
+  <footer>Powered by AIGuide ✨</footer>
+
+  <script>
+    let score = 0;
+    let lives = 3;
+    let level = 1;
+
+    const scoreEl = document.getElementById("score");
+    const livesEl = document.getElementById("lives");
+    const levelEl = document.getElementById("level");
+    const scenarioTitle = document.getElementById("scenario-title");
+    const scenarioText = document.getElementById("scenario-text");
+    const mentorDiv = document.getElementById("mentor");
+    const choicesDiv = document.getElementById("choices");
+
+    const scenarios = [
       {
-        text: "Someone was bitten by a stray dog. What’s the FIRST thing to do?",
+        title: "Level 1: Small Kitchen Fire",
+        text: "You notice smoke coming from a pan in the kitchen. What do you do?",
         choices: [
-          { text: "🚿 Wash wound with soap & water", correct: true, reason: "Cleaning removes saliva & reduces rabies risk." },
-          { text: "🩹 Bandage immediately", correct: false, reason: "Bandaging without cleaning traps infection inside." },
-          { text: "⏳ Wait & watch swelling", correct: false, reason: "Delaying is dangerous with rabies risk." }
+          { text: "🧯 Use extinguisher", correct: true, reply: "Good job! You stopped the fire early." },
+          { text: "🚪 Evacuate immediately", correct: false, reply: "Too soon, you could’ve stopped it safely." },
+          { text: "💧 Pour water", correct: false, reply: "Dangerous! Never pour water on oil fires." }
         ]
       },
       {
-        text: "After cleaning, what’s the next best step?",
+        title: "Level 2: Fire spreading",
+        text: "The fire spreads to curtains. Smoke fills the room.",
         choices: [
-          { text: "🏥 Go to hospital for rabies shots", correct: true, reason: "Rabies vaccine is life-saving." },
-          { text: "💊 Rest at home", correct: false, reason: "Home rest doesn’t prevent rabies." },
-          { text: "🌿 Apply turmeric paste", correct: false, reason: "Folk remedies can’t stop rabies." }
+          { text: "🚪 Evacuate through the nearest exit", correct: true, reply: "Correct! Escape before it’s too late." },
+          { text: "🧯 Keep fighting with extinguisher", correct: false, reply: "Risky! It’s spreading too much." },
+          { text: "📞 Call for help while staying inside", correct: false, reply: "You’ll get trapped in smoke." }
         ]
       },
       {
-        text: "At the hospital, what’s crucial?",
+        title: "Level 3: Smoke in the building",
+        text: "Smoke is heavy in the hallway. You’re coughing.",
         choices: [
-          { text: "💉 Complete the vaccine schedule", correct: true, reason: "Full course ensures protection." },
-          { text: "💊 One dose only", correct: false, reason: "Single dose is not protective." },
-          { text: "🤕 Only painkillers", correct: false, reason: "Painkillers don’t prevent rabies." }
+          { text: "⬇ Crawl low to the ground and evacuate", correct: true, reply: "Smart move! Smoke rises, stay low." },
+          { text: "⬆ Run upright quickly", correct: false, reply: "You inhaled too much smoke." },
+          { text: "🚪 Hide in a room", correct: false, reply: "You got trapped. Wrong choice." }
         ]
       }
-    ]
-  },
-  {
-    title: "Fire Emergency",
-    levels: [
-      {
-        text: "Kitchen fire starts in a pan. What do you do?",
-        choices: [
-          { text: "🧯 Use a fire extinguisher", correct: true, reason: "Stops fire early & safely." },
-          { text: "🚪 Run outside immediately", correct: false, reason: "You could have stopped it quickly." },
-          { text: "💧 Pour water", correct: false, reason: "Water spreads oil fire explosively." }
-        ]
-      },
-      {
-        text: "Fire spreads to curtains, smoke rising fast!",
-        choices: [
-          { text: "🚪 Evacuate through nearest exit", correct: true, reason: "Escape before it’s too late." },
-          { text: "🧯 Keep fighting", correct: false, reason: "Too risky once fire spreads widely." },
-          { text: "📞 Call help while inside", correct: false, reason: "Staying inside risks smoke inhalation." }
-        ]
-      },
-      {
-        text: "Building filling with smoke. Best action?",
-        choices: [
-          { text: "⬇ Stay low & crawl out", correct: true, reason: "Smoke rises — crawling reduces inhalation." },
-          { text: "↔ Open all windows", correct: false, reason: "This fuels the fire with oxygen." },
-          { text: "⬆ Run upstairs", correct: false, reason: "Higher levels = more smoke & danger." }
-        ]
+    ];
+
+    function loadScenario() {
+      if (level > scenarios.length) {
+        scenarioTitle.textContent = "🎉 Victory!";
+        scenarioText.textContent = "You survived the fire emergency!";
+        mentorDiv.textContent = "AIGuide: Excellent work!";
+        choicesDiv.innerHTML = <button onclick="restartGame()">Restart</button>;
+        return;
       }
-    ]
-  },
-  {
-    title: "Chest Pain Emergency",
-    levels: [
-      {
-        text: "A man clutches chest, collapses. What’s first?",
-        choices: [
-          { text: "📞 Call emergency services", correct: true, reason: "Immediate help is critical." },
-          { text: "💧 Give water", correct: false, reason: "Wastes valuable time." },
-          { text: "🚶 Help walk it off", correct: false, reason: "Exertion worsens heart attack." }
-        ]
-      },
-      {
-        text: "He’s unresponsive & not breathing. Action?",
-        choices: [
-          { text: "❤ Start CPR", correct: true, reason: "Keeps blood circulating until medics arrive." },
-          { text: "💤 Place in sleeping position", correct: false, reason: "Does nothing when not breathing." },
-          { text: "📞 Call a friend", correct: false, reason: "Wastes time, CPR is needed NOW." }
-        ]
-      },
-      {
-        text: "Ambulance arrives. Medic asks: Did you do CPR?",
-        choices: [
-          { text: "✅ Yes", correct: true, reason: "Gave him a survival chance." },
-          { text: "❌ No", correct: false, reason: "Delay reduced survival chances." },
-          { text: "😰 Froze in panic", correct: false, reason: "Panic costs lives." }
-        ]
-      }
-    ]
-  },
-  {
-    title: "Choking Emergency",
-    levels: [
-      {
-        text: "Friend choking, can’t breathe. First step?",
-        choices: [
-          { text: "🤲 Perform abdominal thrusts", correct: true, reason: "Heimlich clears the airway." },
-          { text: "💧 Give water", correct: false, reason: "They can’t swallow or breathe." },
-          { text: "🙅 Do nothing", correct: false, reason: "Delays can kill quickly." }
-        ]
-      },
-      {
-        text: "They collapse unconscious. What now?",
-        choices: [
-          { text: "🚑 Call emergency & start CPR", correct: true, reason: "Maintains oxygen supply." },
-          { text: "🛌 Put them on side", correct: false, reason: "Doesn’t help if airway is blocked." },
-          { text: "🏃 Wait for others", correct: false, reason: "Too late — you must act." }
-        ]
-      },
-      {
-        text: "Object dislodges & breathing returns. Next?",
-        choices: [
-          { text: "🏥 Seek medical evaluation", correct: true, reason: "Even after recovery, internal injury is possible." },
-          { text: "🍽 Continue eating", correct: false, reason: "They need medical clearance first." },
-          { text: "😅 Ignore it", correct: false, reason: "Hidden airway damage may remain." }
-        ]
-      }
-    ]
-  }
-];
 
-// -------------------- GAME FUNCTIONS --------------------
-function startGame() {
-  score = 0; lives = 3; level = 1;
-  scoreEl.textContent = score;
-  livesEl.textContent = lives;
-  levelEl.textContent = level;
+      const scenario = scenarios[level - 1];
+      scenarioTitle.textContent = scenario.title;
+      scenarioText.textContent = scenario.text;
+      mentorDiv.textContent = "AIGuide: Choose wisely!";
+      choicesDiv.innerHTML = "";
 
-  // Shuffle scenarios
-  shuffledScenarios = [...allScenarios].sort(() => Math.random() - 0.5);
-  currentScenarioIndex = 0;
-  currentLevelIndex = 0;
+      scenario.choices.forEach(choice => {
+        const btn = document.createElement("button");
+        btn.textContent = choice.text;
+        btn.onclick = () => handleChoice(choice);
+        choicesDiv.appendChild(btn);
+      });
 
-  loadScenario();
-}
-
-function loadScenario() {
-  if (currentScenarioIndex >= shuffledScenarios.length) {
-    scenarioTitle.textContent = "🎉 Congratulations!";
-    scenarioText.textContent = "You completed all emergencies!";
-    mentorDiv.textContent = "";
-    choicesDiv.innerHTML = "";
-    return;
-  }
-
-  const scenario = shuffledScenarios[currentScenarioIndex];
-  const levelData = scenario.levels[currentLevelIndex];
-
-  scenarioTitle.textContent = scenario.title + " - Level " + (currentLevelIndex + 1);
-  scenarioText.textContent = levelData.text;
-  mentorDiv.textContent = "AIGuide: Choose wisely!";
-  choicesDiv.innerHTML = "";
-
-  levelData.choices.forEach(choice => {
-    const btn = document.createElement("button");
-    btn.textContent = choice.text;
-    btn.style.background = "#3a86ff";
-
-    btn.onclick = () => handleAnswer(choice);
-    choicesDiv.appendChild(btn);
-  });
-}
-
-function handleAnswer(choice) {
-  mentorDiv.innerHTML = choice.correct 
-    ? 👏 Wowww! That's the correct answer!<br>${choice.reason}
-    : 😅 Nahhh!! No worries!! You're gonna learn it.<br>${choice.reason};
-
-  if (choice.correct) {
-    score += 10;
-    scoreEl.textContent = score;
-    setTimeout(nextLevel, 2000);
-  } else {
-    lives--;
-    livesEl.textContent = lives;
-    if (lives <= 0) {
-      gameOver();
-    } else {
-      setTimeout(nextLevel, 2000);
+      updateHUD();
     }
-  }
-}
 
-function nextLevel() {
-  const scenario = shuffledScenarios[currentScenarioIndex];
-  if (currentLevelIndex < scenario.levels.length - 1) {
-    currentLevelIndex++;
-    level++;
-    levelEl.textContent = level;
+    function handleChoice(choice) {
+      mentorDiv.textContent = "AIGuide: " + choice.reply;
+      if (choice.correct) {
+        score += 10;
+        level++;
+      } else {
+        lives--;
+        if (lives <= 0) {
+          gameOver();
+          return;
+        }
+      }
+      updateHUD();
+      setTimeout(loadScenario, 1500);
+    }
+
+    function gameOver() {
+      scenarioTitle.textContent = "💀 Game Over!";
+      scenarioText.textContent = "You didn’t survive the fire emergency.";
+      mentorDiv.textContent = "AIGuide: Learn and try again.";
+      choicesDiv.innerHTML = <button onclick="restartGame()">Restart</button>;
+    }
+
+    function restartGame() {
+      score = 0;
+      lives = 3;
+      level = 1;
+      loadScenario();
+    }
+
+    function updateHUD() {
+      scoreEl.textContent = score;
+      livesEl.textContent = lives;
+      levelEl.textContent = level;
+    }
+
+    // start game
     loadScenario();
-  } else {
-    // Move to next scenario
-    currentScenarioIndex++;
-    currentLevelIndex = 0;
-    level++;
-    levelEl.textContent = level;
-    loadScenario();
-  }
-}
-
-function gameOver() {
-  scenarioTitle.textContent = "💀 Game Over!";
-  scenarioText.textContent = "You ran out of lives!";
-  choicesDiv.innerHTML = "";
-  mentorDiv.textContent = "";
-
-  const retryBtn = document.createElement("button");
-  retryBtn.textContent = "🔄 Try Again";
-  retryBtn.style.background = "#e63946";
-  retryBtn.onclick = startGame;
-  choicesDiv.appendChild(retryBtn);
-}
-</script>
-
+  </script>
 </body>
 </html>
