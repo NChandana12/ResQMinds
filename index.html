@@ -1,272 +1,570 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>🩺 ResQMinds: Learn to respond, adapt, and save lives</title>
+<meta charset="utf-8" />
+<title> 🧠 ResQMinds: Health & Safety Survival Game</title>
 <style>
-  * { box-sizing: border-box; margin:0; padding:0; }
-  body {
-    font-family: "Segoe UI", sans-serif;
-    background: linear-gradient(135deg,#121212,#1a1a1a);
-    color: #f1f1f1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  color: #1a1a1a; /* darker text for better contrast on light background */
+  background: linear-gradient(-45deg, #a1c4fd, #c2e9fb, #e0f7fa, #fdfbfb);
+  background-size: 400% 400%;
+  animation: gradientBG 20s ease infinite;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
+@keyframes gradientBG {
+  0% {background-position:0% 50%;}
+  50% {background-position:100% 50%;}
+  100% {background-position:0% 50%;}
+}
+
   header {
     width: 100%;
     padding: 15px;
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: bold;
     background: #1a1a1a;
     color: #4cc9f0;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-    animation: bounceIn 1s ease;
-  }
-  #mascot {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 90px;
-    cursor: pointer;
-    animation: float 3s ease-in-out infinite;
-    z-index: 10;
-  }
-  @keyframes float {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0); }
+    box-shadow: 0 2px 10px rgba(0,0,0,0.6);
   }
   #hud {
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
     width: 80%;
-    font-size: 1.2rem;
-    opacity: 0;
-    animation: fadeIn 1s forwards 0.8s;
+    font-size: 1.1rem;
   }
-  #game-box {
+ #game-box {
     margin-top: 40px;
     max-width: 650px;
-    background: rgba(30,30,30,0.9);
+    background: rgba(30,30,30,0.9); /* dark background */
     padding: 30px;
     border-radius: 20px;
-    box-shadow: 0 0 30px #4cc9f0, 0 0 60px #06d6a0 inset;
+    box-shadow: 0 0 30px #4cc9f0, 0 0 60px #06d6a0 inset; /* glow effect */
     text-align: center;
     line-height: 1.6;
     transform: scale(1);
     transition: transform 0.3s ease;
-  }
-  #game-box:hover { transform: scale(1.02); }
-  #mentor {
-    margin: 20px 0;
-    font-size: 1.2rem;
-    color: #ffd166;
-    min-height: 60px;
-  }
-  .choices { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+}
+#game-box:hover {
+    transform: scale(1.02); /* subtle zoom on hover */
+}
+  #scenario-title { font-size: 1.4rem; margin-bottom: 6px; color: #e6f9ff; }
+  #scenario-text { margin-bottom: 10px; color: #dfefff; min-height: 2.4em; }
+  #mentor { margin: 14px 0; font-size: 1.05rem; color: #ffd166; min-height: 64px; }
+  .choices { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
   button {
-    background: linear-gradient(90deg,#4cc9f0,#06d6a0);
     border: none;
-    padding: 15px;
-    font-size: 1.1rem;
-    font-weight: bold;
+    padding: 12px 14px;
+    font-size: 1rem;
+    font-weight: 700;
     color: #fff;
-    border-radius: 14px;
+    border-radius: 12px;
     cursor: pointer;
-    box-shadow: 0 0 15px rgba(76,201,240,0.7), 0 0 25px rgba(6,214,160,0.5) inset;
-    transition: transform 0.2s, box-shadow 0.3s;
-  }
-  button:hover { transform: scale(1.05); box-shadow: 0 0 25px #72d8f7,0 0 40px #06f5c1 inset; }
-  button:active { transform: scale(0.9); }
-  #review {
-    margin-top: 20px;
+    background: linear-gradient(90deg,#3a86ff,#06d6a0);
+    box-shadow: 0 6px 18px rgba(58,134,255,0.12);
+    transition: transform .14s ease, box-shadow .14s ease;
     text-align: left;
-    background: #2a2a2a;
-    padding: 15px;
-    border-radius: 14px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.4);
   }
-  #review h3 { color: #ff6f3c; }
-  #review ul { padding-left: 20px; }
-  #streak-panel {
-    margin-top: 20px;
-    background: linear-gradient(135deg,#4cc9f0,#ff6f3c,#ffd166);
-    color: #121212;
-    padding: 20px;
-    border-radius: 16px;
-    display: none;
-    animation: slideUp 1s ease;
+  button.small { padding: 10px 12px; font-size: .95rem; width: auto; }
+  button:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(58,134,255,0.18); }
+  #review { margin-top: 18px; text-align: left; background: #232323; padding: 12px; border-radius: 10px; color: #e6e6e6; display: none; }
+  #review h3 { margin: 0 0 8px 0; color: #ffcf66; }
+  #review ul { padding-left: 18px; margin: 0; }
+  footer { margin-top: auto; padding: 12px; font-size: 0.9rem; color: #999; }
+  #mascot {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 86px;
+    cursor: pointer;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.6));
   }
-  .progress-bar { width: 100%; background: rgba(255,255,255,0.2); border-radius: 12px; overflow: hidden; margin: 10px 0; }
-  .progress { height: 20px; background: #06d6a0; width: 0; transition: width 1s ease; }
-  footer { margin-top: auto; padding: 15px; font-size: 0.9rem; color: #999; }
-  .confetti { position: fixed; top: -10px; width: 10px; height: 10px; border-radius: 50%; animation: fall 3s linear forwards; pointer-events: none; }
-  @keyframes fadeIn { to { opacity: 1; } }
-  @keyframes bounceIn { 0% {transform:scale(0.8);opacity:0;} 50% {transform:scale(1.1);} 100%{transform:scale(1);} }
-  @keyframes slideUp { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  @keyframes float { 0% { transform: translateY(0); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0); } }
+  .confetti { position: fixed; top:-10px; width:10px; height:10px; border-radius:50%; pointer-events:none; animation: fall 3s linear forwards; }
   @keyframes fall { to { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+  /* small helpers */
+  .muted { color: #bfcbd6; font-size: .95rem; }
+  .center { text-align: center; }
+  .two-btns { display:flex; gap:10px; justify-content:center; margin-top:10px; flex-wrap:wrap; }
+  .final-summary { text-align:left; }
 </style>
 </head>
 <body>
 
-<header>🩺 ResQMinds: Learn to respond, adapt, and save lives</header>
+<header>🧠 ResQMinds: Health & Safety Survival Game</header>
 
 <div id="hud">
-  <div>❤️ Lives: <span id="lives">3</span></div>
-  <div>⭐ Score: <span id="score">0</span></div>
-  <div>📍 Level: <span id="level">1</span></div>
+  <div>❤ Lives: <strong><span id="lives">3</span></strong></div>
+  <div>⭐ Score: <strong><span id="score">0</span></strong></div>
+  <div>📍 Level: <strong><span id="level">1</span></strong></div>
 </div>
 
 <div id="game-box">
-  <h2 id="scenario-title">Welcome!</h2>
-  <p id="scenario-text">Click Start to begin your training 🚀</p>
-  <div id="mentor">AIGuide: Ready when you are!</div>
+  <h2 id="scenario-title">Welcome to ResQMinds!</h2>
+  <p id="scenario-text">Press Start to begin your survival training 🚀</p>
+
+  <div id="mentor" class="muted">AIGuide: Tips and guidance will appear here.</div>
+
   <div class="choices" id="choices">
     <button style="background:#2a9d8f" onclick="startGame()">▶ Start Game</button>
   </div>
+
   <div id="review"></div>
 </div>
 
-<div id="streak-panel">
-  <h2>🔥 Weekly Streak</h2>
-  <p>You’ve played <span id="days">0</span> days in a row!</p>
-  <div class="progress-bar"><div class="progress" id="progress"></div></div>
-</div>
+<img id="mascot" src="mascot.png" alt="Mascot (click me!)" />
 
-<img id="mascot" src="mascot.png" alt="Mascot">
-
-<footer> Good Luck! By Team Code Red! ✨</footer>
+<footer> By Team Code Red ✨</footer>
 
 <script>
-let score=0,lives=3,level=1,mistakes=[],streakDays=3,currentScenario=0,currentLevel=0;
+/* -------------------------
+   Game state + UI refs
+   ------------------------- */
+let score = 0, lives = 3, level = 1;
+let currentScenarioIndex = 0, currentLevelIndex = 0;
+let shuffledScenarios = [];
+let scenarioStartLives = 3;
+let mistakesThisScenario = [];
+let mistakesByScenario = []; // array of arrays for final summary
 
-const scoreEl=document.getElementById("score");
-const livesEl=document.getElementById("lives");
-const levelEl=document.getElementById("level");
-const scenarioTitle=document.getElementById("scenario-title");
-const scenarioText=document.getElementById("scenario-text");
-const mentorDiv=document.getElementById("mentor");
-const choicesDiv=document.getElementById("choices");
-const reviewDiv=document.getElementById("review");
-const streakPanel=document.getElementById("streak-panel");
-const daysEl=document.getElementById("days");
-const progress=document.getElementById("progress");
-const mascot=document.getElementById("mascot");
+const scoreEl = document.getElementById("score");
+const livesEl = document.getElementById("lives");
+const levelEl = document.getElementById("level");
+const scenarioTitle = document.getElementById("scenario-title");
+const scenarioText = document.getElementById("scenario-text");
+const mentorDiv = document.getElementById("mentor");
+const choicesDiv = document.getElementById("choices");
+const reviewDiv = document.getElementById("review");
+const mascot = document.getElementById("mascot");
 
-const scenarios=[
+/* -------------------------
+   Scenario data (4 scenarios, 4 levels each)
+   ------------------------- */
+const allScenarios = [
   {
-    title:"Sudden Chest Pain",
-    levels:[
-      {text:"Friend clutches chest. What do you do first?",
-       choices:[{text:"📞 Call emergency services",correct:true,reply:"Correct! Help is on the way."},
-                {text:"💊 Offer water",correct:false,reply:"Not enough! They need urgent help."},
-                {text:"🏃 Walk it off",correct:false,reply:"Very risky! They could collapse."}]},
-      {text:"Friend collapses, unresponsive. What now?",
-       choices:[{text:"❤️ Start CPR",correct:true,reply:"Yes! This keeps blood flowing."},
-                {text:"💤 Put them to sleep",correct:false,reply:"Wrong! They’re not breathing."},
-                {text:"📞 Call another friend",correct:false,reply:"Too late — act immediately."}]},
-      {text:"Paramedics arrive. Outcome?",
-       choices:[{text:"✅ You did CPR",correct:true,reply:"Amazing! You gave them a chance."},
-                {text:"❌ You froze",correct:false,reply:"Freezing costs lives."},
-                {text:"🤷 You didn’t act",correct:false,reply:"Survival chances dropped."}]}
+    title: "Dog Bite Emergency",
+    levels: [
+      { text: "Someone was bitten by a stray dog. What’s the FIRST thing to do?",
+        choices: [
+          { text: "🚿 Wash wound with soap & water", correct: true, reason: "Removes saliva & reduces rabies risk." },
+          { text: "🩹 Bandage immediately", correct: false, reason: "Bandaging traps infection inside." },
+          { text: "⏳ Wait & watch swelling", correct: false, reason: "Delaying is dangerous." }
+        ]
+      },
+      { text: "After cleaning, what’s the next best step?",
+        choices: [
+          { text: "🏥 Go to hospital for rabies shots", correct: true, reason: "Rabies vaccine is life-saving." },
+          { text: "💊 Rest at home", correct: false, reason: "Home rest doesn’t prevent rabies." },
+          { text: "🌿 Apply turmeric paste", correct: false, reason: "Folk remedies can’t stop rabies." }
+        ]
+      },
+      { text: "At the hospital, what’s crucial?",
+        choices: [
+          { text: "💉 Complete the vaccine schedule", correct: true, reason: "Full course ensures protection." },
+          { text: "💊 One dose only", correct: false, reason: "Not protective." },
+          { text: "🤕 Only painkillers", correct: false, reason: "Doesn’t prevent rabies." }
+        ]
+      },
+      { text: "Patient feels fine after first shot. What now?",
+        choices: [
+          { text: "✅ Continue full vaccine course", correct: true, reason: "Stopping early risks rabies." },
+          { text: "😴 Skip remaining doses", correct: false, reason: "Incomplete protection." },
+          { text: "🍵 Use herbal drinks", correct: false, reason: "Doesn’t cure rabies." }
+        ]
+      }
     ]
   },
   {
-    title:"Dog Bite Emergency",
-    levels:[
-      {text:"Someone was bitten by a dog. First step?",
-       choices:[{text:"🚿 Wash wound with soap & water",correct:true,reply:"Good! Reduces infection risk."},
-                {text:"🩹 Bandage immediately",correct:false,reply:"No! Must clean first."},
-                {text:"⏳ Wait & watch",correct:false,reply:"Dangerous! Immediate action needed."}]},
-      {text:"After cleaning, next step?",
-       choices:[{text:"🏥 Go to hospital for rabies shots",correct:true,reply:"Correct, rabies vaccine is critical."},
-                {text:"💊 Rest at home",correct:false,reply:"Wrong, does not prevent rabies."},
-                {text:"🌿 Apply turmeric paste",correct:false,reply:"Folk remedies won't prevent rabies."}]}
+    title: "Fire Emergency",
+    levels: [
+      { text: "Kitchen fire starts in a pan. What do you do?",
+        choices: [
+          { text: "🧯 Use a fire extinguisher", correct: true, reason: "Stops fire safely." },
+          { text: "🚪 Run outside immediately", correct: false, reason: "You could have stopped it quickly." },
+          { text: "💧 Pour water", correct: false, reason: "Water spreads oil fire explosively." }
+        ]
+      },
+      { text: "Fire spreads to curtains, smoke rising fast!",
+        choices: [
+          { text: "🚪 Evacuate through nearest exit", correct: true, reason: "Escape before it’s too late." },
+          { text: "🧯 Keep fighting", correct: false, reason: "Too risky." },
+          { text: "📞 Call help while inside", correct: false, reason: "Smoke inhalation risk." }
+        ]
+      },
+      { text: "Building filling with smoke. Best action?",
+        choices: [
+          { text: "⬇ Stay low & crawl out", correct: true, reason: "Smoke rises — crawling reduces inhalation." },
+          { text: "↔ Open all windows", correct: false, reason: "Fuelling fire with oxygen." },
+          { text: "⬆ Run upstairs", correct: false, reason: "More smoke & danger." }
+        ]
+      },
+      { text: "Once outside, what’s the next step?",
+        choices: [
+          { text: "📞 Call fire services", correct: true, reason: "Immediate professional help needed." },
+          { text: "😅 Go back inside", correct: false, reason: "Highly dangerous." },
+          { text: "🔥 Watch quietly", correct: false, reason: "Delay increases damage." }
+        ]
+      }
+    ]
+  },
+  {
+    title: "Chest Pain Emergency",
+    levels: [
+      { text: "A man clutches chest, collapses. What’s first?",
+        choices: [
+          { text: "📞 Call emergency services", correct: true, reason: "Immediate help is critical." },
+          { text: "💧 Give water", correct: false, reason: "Wastes valuable time." },
+          { text: "🚶 Help walk it off", correct: false, reason: "Exertion worsens heart attack." }
+        ]
+      },
+      { text: "He’s unresponsive & not breathing. Action?",
+        choices: [
+          { text: "❤ Start CPR", correct: true, reason: "Keeps blood circulating." },
+          { text: "💤 Place in sleeping position", correct: false, reason: "Does nothing when not breathing." },
+          { text: "📞 Call a friend", correct: false, reason: "Wastes time." }
+        ]
+      },
+      { text: "Ambulance arrives. Medic asks: Did you do CPR?",
+        choices: [
+          { text: "✅ Yes", correct: true, reason: "Gave him a survival chance." },
+          { text: "❌ No", correct: false, reason: "Delay reduced survival chances." },
+          { text: "😰 Froze in panic", correct: false, reason: "Panic costs lives." }
+        ]
+      },
+      { text: "At hospital, doctor asks: Next step?",
+        choices: [
+          { text: "🩺 Provide full history", correct: true, reason: "Helps accurate treatment." },
+          { text: "🤐 Stay silent", correct: false, reason: "Worsens diagnosis." },
+          { text: "🏃 Leave immediately", correct: false, reason: "Unsafe for patient." }
+        ]
+      }
+    ]
+  },
+  {
+    title: "Choking Emergency",
+    levels: [
+      { text: "Friend choking, can’t breathe. First step?",
+        choices: [
+          { text: "🤲 Perform abdominal thrusts", correct: true, reason: "Heimlich clears airway." },
+          { text: "💧 Give water", correct: false, reason: "They can’t swallow or breathe." },
+          { text: "🙅 Do nothing", correct: false, reason: "Delays can kill quickly." }
+        ]
+      },
+      { text: "They collapse unconscious. What now?",
+        choices: [
+          { text: "🚑 Call emergency & start CPR", correct: true, reason: "Maintains oxygen supply." },
+          { text: "🛌 Put them on side", correct: false, reason: "Doesn’t help airway." },
+          { text: "🏃 Wait for others", correct: false, reason: "Too late — act now." }
+        ]
+      },
+      { text: "Object dislodges & breathing returns. Next?",
+        choices: [
+          { text: "🏥 Seek medical evaluation", correct: true, reason: "Possible internal injury." },
+          { text: "🍽 Continue eating", correct: false, reason: "Need clearance first." },
+          { text: "😅 Ignore it", correct: false, reason: "Hidden airway damage may remain." }
+        ]
+      },
+      { text: "They are coughing heavily, what to do?",
+        choices: [
+          { text: "💨 Encourage coughing", correct: true, reason: "Helps clear airway." },
+          { text: "🛌 Lay them down", correct: false, reason: "Can worsen obstruction." },
+          { text: "🚶 Ignore it", correct: false, reason: "Could be dangerous." }
+        ]
+      }
     ]
   }
 ];
 
+/* -------------------------
+   Helpers
+   ------------------------- */
+function updateHUD(){
+  scoreEl.textContent = score;
+  livesEl.textContent = lives;
+  levelEl.textContent = level;
+}
+function escapeHtml(s){
+  return String(s).replace(/[&<>"'`]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;", '`': '&#96;'}[c]));
+}
+
+/* -------------------------
+   Start / Load / Answer
+   ------------------------- */
 function startGame(){
-  score=0;lives=3;level=1;mistakes=[];currentScenario=0;currentLevel=0;
+  score = 0; lives = 3; level = 1;
+  currentScenarioIndex = 0; currentLevelIndex = 0;
+  shuffledScenarios = [...allScenarios]; // keep original order; shuffle if you want
+  mistakesByScenario = allScenarios.map(()=>[]);
+  scenarioStartLives = lives;
+  mistakesThisScenario = [];
+  reviewDiv.style.display = 'none';
   updateHUD();
   loadScenario();
 }
 
 function loadScenario(){
-  reviewDiv.innerHTML="";
-  if(currentScenario>=scenarios.length){showReview("🎉 Victory!","You completed all emergencies!"); return;}
-  const scenario=scenarios[currentScenario];
-  const levelData=scenario.levels[currentLevel];
-  scenarioTitle.textContent=scenario.title + " - Step " + (currentLevel+1);
-  scenarioText.textContent=levelData.text;
-  mentorDiv.textContent="AIGuide: Choose wisely!";
-  choicesDiv.innerHTML="";
-  levelData.choices.forEach(c=>{
-    const btn=document.createElement("button");
-    btn.textContent=c.text;
-    btn.onclick=()=>handleChoice(c,scenario.title);
+  // finished all scenarios -> show final summary
+  if (currentScenarioIndex >= shuffledScenarios.length){
+    showFinalSummary();
+    return;
+  }
+
+  // if new scenario starting (level 0), reset scenario-specific mistakes and record starting lives
+  if (currentLevelIndex === 0) {
+    scenarioStartLives = lives;
+    mistakesThisScenario = [];
+  }
+
+  const scenario = shuffledScenarios[currentScenarioIndex];
+  const levelData = scenario.levels[currentLevelIndex];
+
+  scenarioTitle.textContent = `${scenario.title} — Level ${currentLevelIndex + 1}`;
+  scenarioText.textContent = levelData.text;
+  mentorDiv.textContent = "AIGuide: Choose wisely!";
+  choicesDiv.innerHTML = '';
+  reviewDiv.style.display = 'none';
+
+  levelData.choices.forEach((choice, idx) => {
+    const btn = document.createElement('button');
+    btn.textContent = choice.text;
+    btn.onclick = () => handleAnswer(choice, levelData);
     choicesDiv.appendChild(btn);
   });
 }
 
-function handleChoice(choice,scenarioTitleText){
-  mentorDiv.textContent="AIGuide: "+choice.reply;
-  if(choice.correct){score+=10;launchConfetti();}
-  else{
+/* When user picks an answer */
+function handleAnswer(choice, levelData){
+  // show immediate feedback
+  mentorDiv.innerHTML = choice.correct ? `👏 Correct!<br><span class="muted">${escapeHtml(choice.reason)}</span>`
+                                       : `😅 Wrong!<br><span class="muted">${escapeHtml(choice.reason)}</span>`;
+
+  if (choice.correct){
+    score += 10;
+    launchConfetti();
+  } else {
     lives--;
-    mistakes.push(`❌ At "${scenarioTitleText}", you chose "${choice.text}" → ${choice.reply}`);
-    if(lives<=0){gameOver(); return;}
+    // record detailed mistake (scenario title, level number, chosen, correct)
+    const scenarioTitleText = shuffledScenarios[currentScenarioIndex].title;
+    const correctObj = levelData.choices.find(c => c.correct);
+    const correctText = correctObj ? correctObj.text : '(unknown)';
+    const mistake = `At "${scenarioTitleText}" — Level ${currentLevelIndex + 1}, you chose "${choice.text}". Correct: "${correctText}".`;
+    mistakesThisScenario.push(mistake);
+    mistakesByScenario[currentScenarioIndex].push(mistake);
   }
+
   updateHUD();
-  setTimeout(()=>{
-    currentLevel++;
-    const scenario=scenarios[currentScenario];
-    if(currentLevel>=scenario.levels.length){
-      currentScenario++;
-      currentLevel=0;
-    }
+
+  if (lives <= 0){
+    // delay a little so user sees last feedback
+    setTimeout(gameOver, 900);
+    return;
+  }
+
+  // proceed to next level after short pause
+  setTimeout(nextLevel, 900);
+}
+
+/* -------------------------
+   Advance / End scenario
+   ------------------------- */
+function nextLevel(){
+  const scenario = shuffledScenarios[currentScenarioIndex];
+
+  if (currentLevelIndex < scenario.levels.length - 1){
+    currentLevelIndex++;
+    level++;
+    updateHUD();
     loadScenario();
-  },1500);
+    return;
+  }
+
+  // Completed scenario
+  showScenarioCompletion();
 }
 
-function updateHUD(){
-  scoreEl.textContent=score;
-  livesEl.textContent=lives;
-  levelEl.textContent=level++;
+function showScenarioCompletion(){
+  const scenario = shuffledScenarios[currentScenarioIndex];
+  const livesLost = scenarioStartLives - lives;
+
+  // Build detailed review
+  let reviewHTML = '';
+  if (mistakesThisScenario.length === 0){
+    reviewHTML += `<p>🌟 Perfect run — no mistakes in this scenario.</p>`;
+  } else {
+    reviewHTML += `<h3>📋 Performance Review — details</h3><ul>`;
+    for (const m of mistakesThisScenario){
+      reviewHTML += `<li>${escapeHtml(m)}</li>`;
+    }
+    reviewHTML += `</ul>`;
+  }
+  reviewHTML += `<p class="muted">Lives lost this scenario: ${livesLost}</p>`;
+
+  // show UI
+  scenarioTitle.textContent = `${scenario.title} ✅ Completed!`;
+  scenarioText.innerHTML = reviewHTML;
+  mentorDiv.textContent = 'You completed this scenario!';
+  choicesDiv.innerHTML = '';
+
+  // Continue to next scenario
+  const continueBtn = document.createElement('button');
+  continueBtn.textContent = '➡ Continue to Next Scenario';
+  continueBtn.className = 'small';
+  continueBtn.style.background = '#06d6a0';
+  continueBtn.onclick = () => {
+    currentScenarioIndex++;
+    currentLevelIndex = 0;
+    level++;
+    updateHUD();
+    loadScenario();
+  };
+  // Restart this scenario (from level 1) without resetting entire game progress
+  const restartScenarioBtn = document.createElement('button');
+  restartScenarioBtn.textContent = '🔁 Restart This Scenario';
+  restartScenarioBtn.className = 'small';
+  restartScenarioBtn.style.background = '#f77f00';
+  restartScenarioBtn.onclick = () => {
+    // reset this scenario progress but keep global score & lives
+    currentLevelIndex = 0;
+    mistakesByScenario[currentScenarioIndex] = [];
+    mistakesThisScenario = [];
+    // keep lives & score as they are; if you want to reset lives to full for a restarted scenario,
+    // replace the following two lines with: lives = 3; score = 0; updateHUD();
+    loadScenario();
+  };
+
+  // Restart entire game
+  const restartGameBtn = document.createElement('button');
+  restartGameBtn.textContent = '🔄 Restart Game';
+  restartGameBtn.className = 'small';
+  restartGameBtn.style.background = '#e63946';
+  restartGameBtn.onclick = startGame;
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'two-btns';
+  wrapper.appendChild(continueBtn);
+  wrapper.appendChild(restartScenarioBtn);
+  wrapper.appendChild(restartGameBtn);
+
+  choicesDiv.appendChild(wrapper);
+
+  // show separate (folded) review box with details
+  reviewDiv.style.display = 'block';
+  reviewDiv.innerHTML = reviewHTML;
 }
 
-function gameOver(){showReview("💀 Game Over!","You didn’t save the victims.");}
+/* -------------------------
+   Final summary after all scenarios
+   ------------------------- */
+function showFinalSummary(){
+  scenarioTitle.textContent = "🏁 Final Summary";
+  scenarioText.textContent = `Great work — here is how you did. Total score: ${score}`;
+  mentorDiv.textContent = "AIGuide: Review your performance below.";
 
-function showReview(title,message){
-  scenarioTitle.textContent=title;
-  scenarioText.textContent=message;
-  mentorDiv.textContent="AIGuide: Here’s your review:";
-  choicesDiv.innerHTML='<button onclick="startGame()">🔄 Restart</button>';
-  reviewDiv.innerHTML="<h3>Review:</h3><ul>"+mistakes.map(m=>"<li>"+m+"</li>").join("")+"</ul>";
-  streakPanel.style.display="block";
-  daysEl.textContent=streakDays;
-  progress.style.width=(streakDays/7*100)+"%";
+  // Build per-scenario reports
+  let html = `<div class="final-summary"><h3>Report Card</h3>`;
+  for (let i = 0; i < shuffledScenarios.length; i++){
+    const s = shuffledScenarios[i];
+    const mistakes = mistakesByScenario[i] || [];
+    html += `<h4 style="margin-bottom:4px">${escapeHtml(s.title)}</h4>`;
+    if (mistakes.length === 0){
+      html += `<p class="muted">✅ Perfect — no mistakes</p>`;
+    } else {
+      html += `<ul>`;
+      for (const m of mistakes) html += `<li>${escapeHtml(m)}</li>`;
+      html += `</ul>`;
+    }
+  }
+  html += `</div>`;
+
+  // Buttons: Restart Game
+  choicesDiv.innerHTML = '';
+  const restartBtn = document.createElement('button');
+  restartBtn.textContent = '🔄 Restart Game';
+  restartBtn.style.background = '#06d6a0';
+  restartBtn.onclick = startGame;
+  choicesDiv.appendChild(restartBtn);
+
+  reviewDiv.style.display = 'block';
+  reviewDiv.innerHTML = html;
 }
 
+/* -------------------------
+   Game over
+   ------------------------- */
+function gameOver(){
+  scenarioTitle.textContent = "💀 Game Over!";
+  scenarioText.textContent = "You ran out of lives.";
+  mentorDiv.textContent = '';
+  choicesDiv.innerHTML = '';
+
+  const retryBtn = document.createElement('button');
+  retryBtn.textContent = '🔁 Restart This Scenario';
+  retryBtn.style.background = '#f77f00';
+  retryBtn.onclick = () => {
+    // restart current scenario from level 1 but keep score reset? we keep score but reset level and mistakes for the scenario.
+    currentLevelIndex = 0;
+    mistakesByScenario[currentScenarioIndex] = [];
+    mistakesThisScenario = [];
+    lives = 3; // give fresh lives to retry
+    updateHUD();
+    loadScenario();
+  };
+
+  const restartBtn = document.createElement('button');
+  restartBtn.textContent = '🔄 Restart Game';
+  restartBtn.style.background = '#e63946';
+  restartBtn.onclick = startGame;
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'two-btns';
+  wrapper.appendChild(retryBtn);
+  wrapper.appendChild(restartBtn);
+
+  choicesDiv.appendChild(wrapper);
+  reviewDiv.style.display = 'none';
+}
+
+/* -------------------------
+   Confetti + mascot
+   ------------------------- */
 function launchConfetti(){
-  for(let i=0;i<15;i++){
-    const c=document.createElement("div");
-    c.className="confetti";
-    c.style.left=Math.random()*100+"vw";
-    c.style.background=`hsl(${Math.random()*360},100%,50%)`;
+  for (let i=0;i<18;i++){
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random()*100 + 'vw';
+    c.style.background = `hsl(${Math.floor(Math.random()*360)},90%,60%)`;
+    c.style.width = `${8 + Math.random()*8}px`;
+    c.style.height = c.style.width;
+    c.style.opacity = 0.95;
     document.body.appendChild(c);
-    setTimeout(()=>c.remove(),3000);
+    setTimeout(()=> c.remove(), 3200);
   }
 }
 
-mascot.addEventListener("click",()=>{mentorDiv.textContent="🦉 Mascot: Keep going! You got this!";});
-</script>
+mascot.addEventListener('click', () => {
+  mentorDiv.textContent = "🦉 Mascot: Keep going — you learn by doing. Good luck!";
+});
 
+/* -------------------------
+   Initialize HUD (page load)
+   ------------------------- */
+updateHUD();
+
+</script>
 </body>
 </html>
-  
