@@ -1,197 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>🩺 ResQMinds: Learn to respond, adapt, and save lives</title>
-  <style>
-    * { box-sizing: border-box; margin:0; padding:0; }
-    body {
-      font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(135deg,#121212,#1a1a1a);
-      color: #f1f1f1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    header {
-      width: 100%;
-      padding: 15px;
-      text-align: center;
-      font-size: 2rem;
-      font-weight: bold;
-      background: #1a1a1a;
-      color: #4cc9f0;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-      animation: bounceIn 1s ease;
-    }
-
-    /* Mascot */
-    #mascot {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 90px;
-      cursor: pointer;
-      animation: float 3s ease-in-out infinite;
-      z-index: 10;
-    }
-    @keyframes float {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0); }
-    }
-
-    /* HUD */
-    #hud {
-      margin-top: 20px;
-      display: flex;
-      justify-content: space-between;
-      width: 80%;
-      font-size: 1.2rem;
-      opacity: 0;
-      animation: fadeIn 1s forwards 0.8s;
-    }
-
-    /* Game Box */
-    #game-box {
-      margin-top: 40px;
-      max-width: 650px;
-      background: rgba(30,30,30,0.9);
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 0 30px #4cc9f0, 0 0 60px #06d6a0 inset;
-      text-align: center;
-      line-height: 1.6;
-      transform: scale(1);
-      transition: transform 0.3s ease;
-    }
-    #game-box:hover { transform: scale(1.02); }
-
-    #mentor {
-      margin: 20px 0;
-      font-size: 1.2rem;
-      color: #ffd166;
-      min-height: 60px;
-    }
-
-    /* Buttons */
-    .choices {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      margin-top: 20px;
-    }
-    button {
-      background: linear-gradient(90deg,#4cc9f0,#06d6a0);
-      border: none;
-      padding: 15px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      color: #fff;
-      border-radius: 14px;
-      cursor: pointer;
-      box-shadow: 0 0 15px rgba(76,201,240,0.7), 0 0 25px rgba(6,214,160,0.5) inset;
-      transition: transform 0.2s, box-shadow 0.3s;
-    }
-    button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 25px #72d8f7,0 0 40px #06f5c1 inset;
-    }
-    button:active { transform: scale(0.9); }
-
-    /* Review */
-    #review {
-      margin-top: 20px;
-      text-align: left;
-      background: #2a2a2a;
-      padding: 15px;
-      border-radius: 14px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.4);
-    }
-    #review h3 { color: #ff6f3c; }
-    #review ul { padding-left: 20px; }
-
-    /* Streak */
-    #streak-panel {
-      margin-top: 20px;
-      background: linear-gradient(135deg,#4cc9f0,#ff6f3c,#ffd166);
-      color: #121212;
-      padding: 20px;
-      border-radius: 16px;
-      display: none;
-      animation: slideUp 1s ease;
-    }
-
-    .progress-bar {
-      width: 100%;
-      background: rgba(255,255,255,0.2);
-      border-radius: 12px;
-      overflow: hidden;
-      margin: 10px 0;
-    }
-    .progress {
-      height: 20px;
-      background: #06d6a0;
-      width: 0;
-      transition: width 1s ease;
-    }
-
-    footer { margin-top: auto; padding: 15px; font-size: 0.9rem; color: #999; }
-
-    /* Animations */
-    @keyframes fadeIn { to { opacity: 1; } }
-    @keyframes bounceIn { 0% {transform:scale(0.8);opacity:0;} 50% {transform:scale(1.1);} 100%{transform:scale(1);} }
-    @keyframes slideUp { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-    /* Confetti */
-    .confetti {
-      position: fixed;
-      top: -10px;
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      animation: fall 3s linear forwards;
-      pointer-events: none;
-    }
-    @keyframes fall { to { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
-  </style>
+<meta charset="UTF-8">
+<title>🩺 ResQMinds: Learn to respond, adapt, and save lives</title>
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; }
+  body {
+    font-family: "Segoe UI", sans-serif;
+    background: linear-gradient(135deg,#121212,#1a1a1a);
+    color: #f1f1f1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  header {
+    width: 100%;
+    padding: 15px;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    background: #1a1a1a;
+    color: #4cc9f0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    animation: bounceIn 1s ease;
+  }
+  #mascot {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 90px;
+    cursor: pointer;
+    animation: float 3s ease-in-out infinite;
+    z-index: 10;
+  }
+  @keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+  }
+  #hud {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    font-size: 1.2rem;
+    opacity: 0;
+    animation: fadeIn 1s forwards 0.8s;
+  }
+  #game-box {
+    margin-top: 40px;
+    max-width: 650px;
+    background: rgba(30,30,30,0.9);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px #4cc9f0, 0 0 60px #06d6a0 inset;
+    text-align: center;
+    line-height: 1.6;
+    transform: scale(1);
+    transition: transform 0.3s ease;
+  }
+  #game-box:hover { transform: scale(1.02); }
+  #mentor {
+    margin: 20px 0;
+    font-size: 1.2rem;
+    color: #ffd166;
+    min-height: 60px;
+  }
+  .choices { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+  button {
+    background: linear-gradient(90deg,#4cc9f0,#06d6a0);
+    border: none;
+    padding: 15px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #fff;
+    border-radius: 14px;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(76,201,240,0.7), 0 0 25px rgba(6,214,160,0.5) inset;
+    transition: transform 0.2s, box-shadow 0.3s;
+  }
+  button:hover { transform: scale(1.05); box-shadow: 0 0 25px #72d8f7,0 0 40px #06f5c1 inset; }
+  button:active { transform: scale(0.9); }
+  #review {
+    margin-top: 20px;
+    text-align: left;
+    background: #2a2a2a;
+    padding: 15px;
+    border-radius: 14px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+  }
+  #review h3 { color: #ff6f3c; }
+  #review ul { padding-left: 20px; }
+  #streak-panel {
+    margin-top: 20px;
+    background: linear-gradient(135deg,#4cc9f0,#ff6f3c,#ffd166);
+    color: #121212;
+    padding: 20px;
+    border-radius: 16px;
+    display: none;
+    animation: slideUp 1s ease;
+  }
+  .progress-bar { width: 100%; background: rgba(255,255,255,0.2); border-radius: 12px; overflow: hidden; margin: 10px 0; }
+  .progress { height: 20px; background: #06d6a0; width: 0; transition: width 1s ease; }
+  footer { margin-top: auto; padding: 15px; font-size: 0.9rem; color: #999; }
+  .confetti { position: fixed; top: -10px; width: 10px; height: 10px; border-radius: 50%; animation: fall 3s linear forwards; pointer-events: none; }
+  @keyframes fadeIn { to { opacity: 1; } }
+  @keyframes bounceIn { 0% {transform:scale(0.8);opacity:0;} 50% {transform:scale(1.1);} 100%{transform:scale(1);} }
+  @keyframes slideUp { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  @keyframes fall { to { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+</style>
 </head>
 <body>
 
 <header>🩺 ResQMinds: Learn to respond, adapt, and save lives</header>
 
-<!-- HUD -->
 <div id="hud">
   <div>❤️ Lives: <span id="lives">3</span></div>
   <div>⭐ Score: <span id="score">0</span></div>
   <div>📍 Level: <span id="level">1</span></div>
 </div>
 
-<!-- Game -->
 <div id="game-box">
-  <h2 id="scenario-title">Level 1: Sudden Chest Pain</h2>
-  <p id="scenario-text">You’re at the park with your friend. Suddenly, they clutch their chest. What do you do?</p>
-  <div id="mentor">AIGuide: Choose wisely!</div>
-  <div class="choices" id="choices"></div>
+  <h2 id="scenario-title">Welcome!</h2>
+  <p id="scenario-text">Click Start to begin your training 🚀</p>
+  <div id="mentor">AIGuide: Ready when you are!</div>
+  <div class="choices" id="choices">
+    <button style="background:#2a9d8f" onclick="startGame()">▶ Start Game</button>
+  </div>
   <div id="review"></div>
 </div>
 
-<!-- Streak -->
 <div id="streak-panel">
   <h2>🔥 Weekly Streak</h2>
   <p>You’ve played <span id="days">0</span> days in a row!</p>
   <div class="progress-bar"><div class="progress" id="progress"></div></div>
 </div>
 
-<!-- Mascot -->
 <img id="mascot" src="mascot.png" alt="Mascot">
 
 <footer> Good Luck! By Team Code Red! ✨</footer>
 
 <script>
-let score=0,lives=3,level=1,mistakes=[],streakDays=3;
+let score=0,lives=3,level=1,mistakes=[],streakDays=3,currentScenario=0,currentLevel=0;
 
 const scoreEl=document.getElementById("score");
 const livesEl=document.getElementById("lives");
@@ -207,69 +159,114 @@ const progress=document.getElementById("progress");
 const mascot=document.getElementById("mascot");
 
 const scenarios=[
- {title:"Level 1: Sudden Chest Pain",text:"Your friend clutches their chest. What do you do first?",
-  choices:[{text:"📞 Call emergency services",correct:true,reply:"Correct! Help is on the way."},
-           {text:"💊 Offer water",correct:false,reply:"Not enough! They need urgent help."},
-           {text:"🏃 Walk it off",correct:false,reply:"Very risky! They could collapse."}]},
- {title:"Level 2: Waiting for Help",text:"Your friend collapses, unresponsive. What now?",
-  choices:[{text:"❤️ Start CPR",correct:true,reply:"Yes! This keeps blood flowing."},
-           {text:"💤 Put them to sleep",correct:false,reply:"Wrong! They’re not breathing."},
-           {text:"📞 Call another friend",correct:false,reply:"Too late — act immediately."}]},
- {title:"Level 3: Ambulance Arrival",text:"Paramedics arrive. What outcome follows?",
-  choices:[{text:"✅ You did CPR",correct:true,reply:"Amazing! You gave them a chance."},
-           {text:"❌ You froze",correct:false,reply:"Freezing costs lives."},
-           {text:"🤷 You didn’t act",correct:false,reply:"Survival chances dropped."}]}
+  {
+    title:"Sudden Chest Pain",
+    levels:[
+      {text:"Friend clutches chest. What do you do first?",
+       choices:[{text:"📞 Call emergency services",correct:true,reply:"Correct! Help is on the way."},
+                {text:"💊 Offer water",correct:false,reply:"Not enough! They need urgent help."},
+                {text:"🏃 Walk it off",correct:false,reply:"Very risky! They could collapse."}]},
+      {text:"Friend collapses, unresponsive. What now?",
+       choices:[{text:"❤️ Start CPR",correct:true,reply:"Yes! This keeps blood flowing."},
+                {text:"💤 Put them to sleep",correct:false,reply:"Wrong! They’re not breathing."},
+                {text:"📞 Call another friend",correct:false,reply:"Too late — act immediately."}]},
+      {text:"Paramedics arrive. Outcome?",
+       choices:[{text:"✅ You did CPR",correct:true,reply:"Amazing! You gave them a chance."},
+                {text:"❌ You froze",correct:false,reply:"Freezing costs lives."},
+                {text:"🤷 You didn’t act",correct:false,reply:"Survival chances dropped."}]}
+    ]
+  },
+  {
+    title:"Dog Bite Emergency",
+    levels:[
+      {text:"Someone was bitten by a dog. First step?",
+       choices:[{text:"🚿 Wash wound with soap & water",correct:true,reply:"Good! Reduces infection risk."},
+                {text:"🩹 Bandage immediately",correct:false,reply:"No! Must clean first."},
+                {text:"⏳ Wait & watch",correct:false,reply:"Dangerous! Immediate action needed."}]},
+      {text:"After cleaning, next step?",
+       choices:[{text:"🏥 Go to hospital for rabies shots",correct:true,reply:"Correct, rabies vaccine is critical."},
+                {text:"💊 Rest at home",correct:false,reply:"Wrong, does not prevent rabies."},
+                {text:"🌿 Apply turmeric paste",correct:false,reply:"Folk remedies won't prevent rabies."}]}
+    ]
+  }
 ];
 
+function startGame(){
+  score=0;lives=3;level=1;mistakes=[];currentScenario=0;currentLevel=0;
+  updateHUD();
+  loadScenario();
+}
+
 function loadScenario(){
- reviewDiv.innerHTML="";
- if(level>scenarios.length){showReview("🎉 Victory!","You saved your friend!");return;}
- const s=scenarios[level-1];
- scenarioTitle.textContent=s.title;
- scenarioText.textContent=s.text;
- mentorDiv.textContent="AIGuide: Choose wisely!";
- choicesDiv.innerHTML="";
- s.choices.forEach(c=>{
-   const btn=document.createElement("button");
-   btn.textContent=c.text;
-   btn.onclick=()=>handleChoice(c,s.title);
-   choicesDiv.appendChild(btn);
- });
- updateHUD();
+  reviewDiv.innerHTML="";
+  if(currentScenario>=scenarios.length){showReview("🎉 Victory!","You completed all emergencies!"); return;}
+  const scenario=scenarios[currentScenario];
+  const levelData=scenario.levels[currentLevel];
+  scenarioTitle.textContent=scenario.title + " - Step " + (currentLevel+1);
+  scenarioText.textContent=levelData.text;
+  mentorDiv.textContent="AIGuide: Choose wisely!";
+  choicesDiv.innerHTML="";
+  levelData.choices.forEach(c=>{
+    const btn=document.createElement("button");
+    btn.textContent=c.text;
+    btn.onclick=()=>handleChoice(c,scenario.title);
+    choicesDiv.appendChild(btn);
+  });
 }
 
-function handleChoice(choice,title){
- mentorDiv.textContent="AIGuide: "+choice.reply;
- if(choice.correct){score+=10;level++;launchConfetti();}
- else{lives--;mistakes.push(`❌ At "${title}", you chose "${choice.text}" → ${choice.reply}`);if(lives<=0){gameOver();return;}}
- updateHUD();
- setTimeout(loadScenario,1500);
+function handleChoice(choice,scenarioTitleText){
+  mentorDiv.textContent="AIGuide: "+choice.reply;
+  if(choice.correct){score+=10;launchConfetti();}
+  else{
+    lives--;
+    mistakes.push(`❌ At "${scenarioTitleText}", you chose "${choice.text}" → ${choice.reply}`);
+    if(lives<=0){gameOver(); return;}
+  }
+  updateHUD();
+  setTimeout(()=>{
+    currentLevel++;
+    const scenario=scenarios[currentScenario];
+    if(currentLevel>=scenario.levels.length){
+      currentScenario++;
+      currentLevel=0;
+    }
+    loadScenario();
+  },1500);
 }
 
-function updateHUD(){scoreEl.textContent=score;livesEl.textContent=lives;levelEl.textContent=level;}
+function updateHUD(){
+  scoreEl.textContent=score;
+  livesEl.textContent=lives;
+  levelEl.textContent=level++;
+}
 
-function gameOver(){showReview("💀 Game Over!","You didn’t save your friend.");}
+function gameOver(){showReview("💀 Game Over!","You didn’t save the victims.");}
 
 function showReview(title,message){
- scenarioTitle.textContent=title;
- scenarioText.textContent=message;
- mentorDiv.textContent="AIGuide: Here’s your review:";
- choicesDiv.innerHTML='<button onclick="restart()">🔄 Restart</button>';
- reviewDiv.innerHTML="<h3>Review:</h3><ul>"+mistakes.map(m=>"<li>"+m+"</li>").join("")+"</ul>";
- streakPanel.style.display="block";daysEl.textContent=streakDays;progress.style.width=(streakDays/7*100)+"%";
+  scenarioTitle.textContent=title;
+  scenarioText.textContent=message;
+  mentorDiv.textContent="AIGuide: Here’s your review:";
+  choicesDiv.innerHTML='<button onclick="startGame()">🔄 Restart</button>';
+  reviewDiv.innerHTML="<h3>Review:</h3><ul>"+mistakes.map(m=>"<li>"+m+"</li>").join("")+"</ul>";
+  streakPanel.style.display="block";
+  daysEl.textContent=streakDays;
+  progress.style.width=(streakDays/7*100)+"%";
 }
-
-function restart(){score=0;lives=3;level=1;mistakes=[];loadScenario();}
 
 function launchConfetti(){
- for(let i=0;i<15;i++){const c=document.createElement("div");c.className="confetti";
- c.style.left=Math.random()*100+"vw";c.style.background=`hsl(${Math.random()*360},100%,50%)`;
- document.body.appendChild(c);setTimeout(()=>c.remove(),3000);}
+  for(let i=0;i<15;i++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=`hsl(${Math.random()*360},100%,50%)`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3000);
+  }
 }
 
-// Mascot interaction
 mascot.addEventListener("click",()=>{mentorDiv.textContent="🦉 Mascot: Keep going! You got this!";});
-loadScenario();
 </script>
+
 </body>
 </html>
+  
