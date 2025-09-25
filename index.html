@@ -11,10 +11,10 @@ body {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  color: #1a1a1a; /* darker text for better contrast on light background */
-  background: linear-gradient(-45deg, #a1c4fd, #c2e9fb, #e0f7fa, #fdfbfb);
+  color: #f1f1f1; /* light text for contrast */
+  background: linear-gradient(-45deg, #4a5568, #718096, #2d3748, #4a5568); /* medium-dark gradient */
   background-size: 400% 400%;
-  animation: gradientBG 20s ease infinite;
+  animation: gradientBG 25s ease infinite;
 }
 
 @keyframes gradientBG {
@@ -22,7 +22,6 @@ body {
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
-
 
 @keyframes gradientBG {
   0% {background-position:0% 50%;}
@@ -568,3 +567,4 @@ updateHUD();
 </script>
 </body>
 </html>
+
