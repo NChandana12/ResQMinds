@@ -1,4 +1,6 @@
 // api/ask.js
+console.log("OPENAI_API_KEY is set?", !!process.env.OPENAI_API_KEY);
+
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
